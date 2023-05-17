@@ -1,4 +1,4 @@
-package com.gdu.semi.config;
+package com.gdu.mongmong.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-@MapperScan(basePackages={"com.gdu.semi.mapper"})
+@MapperScan(basePackages={"com.gdu.mongmong.mapper"})
 @PropertySource(value={"classpath:application.properties"})
 @EnableTransactionManagement
 @Configuration
@@ -66,3 +66,4 @@ public class DBConfig {
 	}
 	
 }
+	

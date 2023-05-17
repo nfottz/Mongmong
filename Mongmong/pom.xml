@@ -3,11 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gdu</groupId>
-	<artifactId>semi</artifactId>
-	<name>SemiProject</name>
+	<artifactId>mongmong</artifactId>
+	<name>Mongmong</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
-
+	
+  
   <properties>
     <java-version>11</java-version>
     <org.springframework-version>5.3.3</org.springframework-version>

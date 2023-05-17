@@ -1,4 +1,4 @@
-package com.gdu.semi.logback;
+package com.gdu.mongmong.logback;
 
 import java.text.SimpleDateFormat;
 

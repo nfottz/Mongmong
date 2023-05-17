@@ -1,4 +1,4 @@
-package com.gdu.semi.config;
+package com.gdu.mongmong.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

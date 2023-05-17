@@ -12,7 +12,7 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-		<typeAlias alias="" type="com.gdu.semi." />
+		<typeAlias alias="" type="com.gdu.mongmong." />
 	</typeAliases>
 
 </configuration>
