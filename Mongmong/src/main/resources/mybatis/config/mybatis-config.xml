@@ -12,7 +12,12 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-		<typeAlias alias="" type="com.gdu.mongmong." />
+		<typeAlias alias="CustomerServiceDTO" type="com.gdu.mongmong.domain.CustomerServiceDTO" />
+		<typeAlias alias="CustomerServiceFilesDTO" type="com.gdu.mongmong.domain.CustomerServiceFilesDTO" />
+		<typeAlias alias="RestUserDTO" type="com.gdu.mongmong.domain.RestUserDTO" />
+		<typeAlias alias="UserAccessDTO" type="com.gdu.mongmong.domain.UserAccessDTO" />
+		<typeAlias alias="UserDTO" type="com.gdu.mongmong.domain.UserDTO" />
+		<typeAlias alias="LeaveUserDTO" type="com.gdu.mongmong.domain.LeaveUserDTO" />
 	</typeAliases>
 
 </configuration>

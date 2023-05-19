@@ -22,18 +22,18 @@ public class JavaMailUtil {
   @Autowired
   private Environment env;
   
-  public void sendJavaMail(String to, String title, String content) {  // 받는 사람, 제목, 내용
+  public void sendJavaMail(String to, String title, String content) {  // 諛쏅뒗 �궗�엺, �젣紐�, �궡�슜
     
     try {
       
-      // 이메일 전송을 위한 필수 속성을 Properties 객체로 만든다.
+      // �씠硫붿씪 �쟾�넚�쓣 �쐞�븳 �븘�닔 �냽�꽦�쓣 Properties 媛앹껜濡� 留뚮뱺�떎.
       Properties properties = new Properties();
       properties.put("mail.smtp.host", env.getProperty("spring.mail.host"));
       properties.put("mail.smtp.port", env.getProperty("spring.mail.port"));
       properties.put("mail.smtp.auth", env.getProperty("spring.mail.properties.mail.smtp.auth"));
       properties.put("mail.smtp.starttls.enable", env.getProperty("spring.mail.properties.mail.smtp.starttls.enable"));
      
-      // 이메일을 보내는 계정 정보를 javax.mail.Session에 저장한다.
+      // �씠硫붿씪�쓣 蹂대궡�뒗 怨꾩젙 �젙蹂대�� javax.mail.Session�뿉 ���옣�븳�떎.
       MimeMessage message = new MimeMessage(Session.getInstance(properties, new Authenticator() {
         @Override
         protected PasswordAuthentication getPasswordAuthentication() {
@@ -41,13 +41,13 @@ public class JavaMailUtil {
         }
       }));
       
-      // 이메일 만들기
-      message.setFrom( new InternetAddress(env.getProperty("spring.mail.username"), "사이트관리자") );
+      // �씠硫붿씪 留뚮뱾湲�
+      message.setFrom(new InternetAddress(env.getProperty("spring.mail.username"), "�궗�씠�듃愿�由ъ옄") );
       message.setRecipient( Message.RecipientType.TO, new InternetAddress(to) );
       message.setSubject(title);
       message.setContent(content, "text/html; charset=UTF-8");
       
-      // 이메일 보내기
+      // �씠硫붿씪 蹂대궡湲�
       Transport.send(message);
       
     } catch (Exception e) {
