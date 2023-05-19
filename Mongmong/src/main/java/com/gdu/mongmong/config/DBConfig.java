@@ -26,7 +26,6 @@ public class DBConfig {
 	@Autowired
 	private Environment env;
 	
-	// HikaryConfig Bean
 	@Bean
 	public HikariConfig hikariConfig() {
 		HikariConfig hikariConfig = new HikariConfig();
@@ -37,13 +36,11 @@ public class DBConfig {
 		return hikariConfig;
 	}
 	
-	// HikariDataSource Bean
 	@Bean(destroyMethod="close")
 	public HikariDataSource hikariDataSource() {
 		return new HikariDataSource(hikariConfig());
 	}
-	
-	// SqlSessionFactory Bean
+
 	@Bean
 	public SqlSessionFactory sqlSessionFactory() throws Exception {
 		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
@@ -53,13 +50,11 @@ public class DBConfig {
 		return bean.getObject();
 	}
 	
-	// SqlSessionTemplate Bean
 	@Bean
 	public SqlSessionTemplate sqlSessionTemplate() throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory());
 	}
 	
-	// TransactionManager Bean
 	@Bean
 	public TransactionManager transactionManager() {
 		return new DataSourceTransactionManager(hikariDataSource());

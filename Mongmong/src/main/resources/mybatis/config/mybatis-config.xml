@@ -12,7 +12,31 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-		<typeAlias alias="" type="com.gdu.mongmong." />
+    <typeAlias alias="UserDTO" type="com.gdu.mongmong.domain.UserDTO" />
+    <typeAlias alias="RestUserDTO" type="com.gdu.mongmong.domain.RestUserDTO" />
+    <typeAlias alias="LeaveUserDTO" type="com.gdu.mongmong.domain.LeaveUserDTO" />
+    <typeAlias alias="UserAccessDTO" type="com.gdu.mongmong.domain.UserAccessDTO" />
+    <typeAlias alias="AddressDTO" type="com.gdu.mongmong.domain.AddressDTO" />
+    <typeAlias alias="SellerFilesDTO" type="com.gdu.mongmong.domain.SellerFilesDTO" />
+    <typeAlias alias="ProductCategoryDTO" type="com.gdu.mongmong.domain.ProductCategoryDTO"/>
+    <typeAlias alias="ProductDTO" type="com.gdu.mongmong.domain.ProductDTO"/>
+    <typeAlias alias="ProductFilesDTO" type="com.gdu.mongmong.domain.ProductFilesDTO"/>
+    <typeAlias alias="OrderDTO"       type="com.gdu.mongmong.domain.OrderDTO" />
+    <typeAlias alias="CouponDTO"      type="com.gdu.mongmong.domain.CouponDTO" />
+    <typeAlias alias="UserCouponDTO"  type="com.gdu.mongmong.domain.UserCouponDTO" />
+    <typeAlias alias="OrderDetailDTO" type="com.gdu.mongmong.domain.OrderDetailDTO" />
+    <typeAlias alias="ReviewDTO"       type="com.gdu.mongmong.domain.ReviewDTO" />
+    <typeAlias alias="ReviewFilesDTO" type="com.gdu.mongmong.domain.ReviewFilesDTO" />
+    <typeAlias alias="ReviewLikeDTO"  type="com.gdu.mongmong.domain.ReviewLikeDTO" />
+    <typeAlias alias="PointDetailDTO" type="com.gdu.mongmong.domain.PointDetailDTO" />
+    <typeAlias alias="CartDTO"           type="com.gdu.mongmong.domain.CartDTO" />
+    <typeAlias alias="ProductSellerDTO" type="com.gdu.mongmong.domain.ProductSellerDTO"/>
+    <typeAlias alias="ProductQnaDTO" type="com.gdu.mongmong.domain.ProductQnaDTO"/>
+    <typeAlias alias="QnaFilesDTO" type="com.gdu.mongmong.domain.QnaFilesDTO"/>
+    <typeAlias alias="CustomerServiceDTO" type="com.gdu.mongmong.domain.CustomerServiceDTO" />
+    <typeAlias alias="CustomerServiceFilesDTO" type="com.gdu.mongmong.domain.CustomerServiceFilesDTO" />
+    <typeAlias alias="NoticeDTO" type="com.gdu.mongmong.domain.NoticeDTO"/>
+    <typeAlias alias="NoticeFilesDTO" type="com.gdu.mongmong.domain.NoticeFilesDTO"/>   
 	</typeAliases>
 
 </configuration>

@@ -13,7 +13,24 @@
 </head>
 <body>
 
+  <div id="user">회원 로그인</div>
+  <div id="guest">비회원 로그인</div>
   
+  <div>
+    <form>
+      <input type="text">
+      <input type="password">
+      <input type="button">
+    </form>
+    
+  </div>
+  <div>
+    
+  </div>
+  
+  <div>
+  
+  </div>
 
 </body>
 </html>
