@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdu.mongmong.mapper.OrderMapper">
+
+	<select id="selectUserByUserDTO" parameterType="UserDTO" resultType="UserDTO">
+	  SELECT USER_ID
+	    FROM USER_TBL
+	   WHERE USER_ID = #{userId}
+	     AND USER_PW = #{userPw}
+	</select>
+  
+	<select id="selectUserById" parameterType="String" resultType="UserDTO">
+		SELECT USER_NO
+		     , USER_TYPE
+		     , USER_ID
+		     , USER_PW
+		     , USER_NAME
+		     , CONTACT
+		     , EMAIL
+		     , GENDER
+		     , BIRTHYEAR
+		     , BIRTHDATE
+		     , AGREECODE
+		     , JOINED_AT
+		     , PW_MODIFIED_AT
+		     , AUTOLOGIN_ID
+		     , AUTOLOGIN_EXPIRED_AT
+		     , ON_BLACKLIST
+		     , SELLER_NAME
+		     , SELLER_CERTIF
+		     , SELLER_OPEN_DATE
+          FROM USER_TBL
+         WHERE USER_ID = #{userId}
+	</select>
+	
+
+	
+	
+	
+	
+	
+	
+
+
+
+	<select id="getProdList" resultType="ProductDTO">
+		SELECT PROD_NO, CATEGORY_NO, PROD_NAME, PROD_PRICE, PROD_STOCK, PROD_CONTENT, PROD_REG_DATE, PROD_MOD_DATE, PROD_DELETED
+		  FROM PRODUCT_TBL
+	     ORDER BY PROD_NO DESC
+	</select>
+	<select id="selectProductByNo" parameterType="int" resultType="ProductDTO">
+		SELECT PROD_NO, CATEGORY_NO, PROD_NAME, PROD_PRICE, PROD_STOCK, PROD_CONTENT, PROD_REG_DATE, PROD_MOD_DATE, PROD_DELETED
+		  FROM PRODUCT_TBL
+	     WHERE PROD_NO = #{prodNo}
+	</select>
+	
+	<!-- 쿼리 다시 짜기 -->
+	<select id="getCartList" parameterType="Map" resultType="CartDTO">
+		SELECT 
+			   C.CART_NO
+			 , C.USER_NO
+			 , C.PROD_NO
+			 , C.AMOUNT
+			 , C.CART_ADD_DATE
+			 , P.PROD_NAME
+			 , P.PROD_PRICE
+			 , PS.DELIVERY_PRICE
+			 , PS.DISCOUNT_RATE
+		  FROM CART_TBL C            INNER JOIN PRODUCT_TBL P
+			ON C.PROD_NO = P.PROD_NO INNER JOIN PRODUCT_SELLER_TBL PS
+		    ON P.PROD_NO = PS.PROD_NO
+		 WHERE
+			   C.USER_NO = #{userNo}
+			   <if test="prodNoList != null and prodNoList.size() > 0" >
+			   	    AND C.PROD_NO IN
+	       		   <foreach collection="prodNoList" item="prodNo" open="(" separator="," close=")">
+			   	  		#{prodNo}
+			       </foreach>
+			   </if>
+	     ORDER BY C.CART_NO DESC
+	</select>
+	<select id="checkCart" parameterType="CartDTO" resultType="CartDTO">
+		SELECT *
+	 	  FROM CART_TBL 
+	  	 WHERE USER_NO = #{userNo} AND PROD_NO = #{prodNo}
+	</select>
+	<insert id="addCart" parameterType="CartDTO">
+		INSERT INTO CART_TBL
+			(CART_NO, USER_NO, PROD_NO, AMOUNT, CART_ADD_DATE)
+			VALUES
+			(CART_SEQ.NEXTVAL, #{userNo}, #{prodNo}, #{amount}, SYSDATE)
+	</insert>
+	<update id="modifyCartAmount" parameterType="CartDTO">
+		UPDATE CART_TBL
+		   SET AMOUNT = #{amount}
+		 WHERE USER_NO = #{userNo}
+		   AND PROD_NO = #{prodNo}
+	</update>
+	<delete id="removeCartList" parameterType="List">
+		DELETE
+		  FROM CART_TBL
+		<where>
+			<foreach collection="list" item="cartNo" open="CART_NO IN(" separator="," close=")">
+				#{cartNo}
+			</foreach>
+		</where>
+	</delete>
+	
+	<select id="getUserAddress" parameterType="int" resultType="AddressDTO">
+		SELECT ADDR_NO, USER_NO, ADDR_DEFAULT, ADDR_NAME, ADDR_CONTACT, ADDR_NICKNAME, POSTCODE, ROAD_ADDRESS, JIBUN_ADDRESS, DETAIL_ADDRESS, EXTRA_ADDRESS
+		  FROM ADDRESS_TBL
+		 WHERE USER_NO = #{userNo}
+	</select>
+	
+	<insert id="addOrderContent" parameterType="OrderDTO">
+		<selectKey order="BEFORE" resultType="int" keyProperty="orderNo">
+			SELECT ORDER_SEQ.NEXTVAL
+			  FROM DUAL
+		</selectKey>
+		INSERT INTO ORDER_TBL
+			 (ORDER_NO
+			, USER_NO
+			, ORDER_DATE
+			, ORDER_TOTAL_PRICE
+			, PAY_METHOD
+			, ORDER_STATUS
+			, SHIPPED_DATE
+			, MEMBERSHIP_POINT
+			, POINT_RATE
+			, IS_MEMBER
+			, ORDER_NAME
+			, CONTACT
+			, POSTCODE
+			, ROAD_ADDRESS
+			, JIBUN_ADDRESS
+			, DETAIL_ADDRESS
+			, EXTRA_ADDRESS
+			, ORDER_REQUEST
+			, ORDER_CANCELED)
+	  VALUES
+			 (#{orderNo}
+			, #{userNo}
+			, SYSDATE
+			, #{orderTotalPrice}
+			, #{payMethod}
+			, #{orderStatus}
+			, SYSDATE
+			, #{membershipPoint}
+			, 10
+			, 0
+			, #{orderName}
+			, #{contact}
+			, #{postcode}
+			, #{roadAddress}
+			, #{jibunAddress}
+			, #{detailAddress}
+			, #{extraAddress}
+			, #{orderRequest}
+			, 0
+			)
+	</insert>
+	<select id="getOrderByNo" parameterType="Map" resultType="OrderDTO">
+		SELECT 
+	 	       ORDER_NO
+			 , USER_NO
+			 , ORDER_DATE
+			 , ORDER_TOTAL_PRICE
+			 , PAY_METHOD
+			 , ORDER_STATUS
+			 , SHIPPED_DATE
+			 , MEMBERSHIP_POINT
+			 , POINT_RATE
+			 , IS_MEMBER
+			 , ORDER_NAME
+			 , CONTACT
+		 	 , POSTCODE
+			 , ROAD_ADDRESS
+			 , JIBUN_ADDRESS
+			 , DETAIL_ADDRESS
+			 , EXTRA_ADDRESS
+			 , ORDER_REQUEST
+			 , ORDER_CANCELED
+		  FROM ORDER_TBL
+		 WHERE USER_NO = #{userNo}
+		 <if test="orderNo != null">
+		 	AND ORDER_NO = #{orderNo}
+		 </if>
+	</select>
+	<insert id="addOrderDetail" parameterType="OrderDetailDTO">
+		INSERT INTO ORDER_DETAIL_TBL
+		VALUES (
+			   ORDER_DETAIL_SEQ.NEXTVAL
+			 , #{orderDTO.orderNo}
+			 , #{productDTO.prodNo}
+			 , 1
+			 , #{prodAmount}
+		)
+	</insert>
+	<insert id="addPoint" parameterType="PointDetailDTO">
+		INSERT INTO POINT_DETAIL_TBL
+		VALUES (
+			   POINT_DETAIL_SEQ.NEXTVAL
+			 , #{userNo}
+			 , #{orderNo}
+			 , 1
+			 , #{pointDetail}
+			 , #{pointAmount}
+			 , SYSDATE
+			 , ADD_MONTHS(SYSDATE, 1)
+		)
+	</insert>
+	<delete id="afterOrderDeleteCart" parameterType="Map">
+		DELETE 
+		  FROM CART_TBL
+		 WHERE USER_NO = #{userNo} 
+		   AND <foreach collection="prodNoList" item="prodNo" open="PROD_NO IN(" separator="," close=")">
+				#{prodNo}
+			</foreach>
+	</delete>
+	<select id="getOrderDetail" parameterType="int" resultType="OrderDetailDTO">
+		SELECT ORDER_DETAIL_NO, ORDER_NO, PROD_NO, COUPON_NO, PROD_AMOUNT
+		  FROM ORDER_DETAIL_TBL
+		 WHERE ORDER_NO = #{orderNo}
+ 	</select>
+	
+	
+</mapper>
