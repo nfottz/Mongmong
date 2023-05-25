@@ -66,7 +66,7 @@
       </ul>
     </div>
     <div>
-      <h4><a href="#">판매자 페이지</a></h4>
+      <h4><a href="${contextPath }/seller/sellermain.do">판매자 페이지</a></h4>
     </div>
   </div>
 
