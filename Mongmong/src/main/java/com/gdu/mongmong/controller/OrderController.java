@@ -50,17 +50,6 @@ public class OrderController {
 		return "order/prodDetail";
 	}
 	
-	@GetMapping("/prodList.form")
-	public String prodList(Model model) {
-		model.addAttribute("prodList", orderService.getProdList());
-		return "order/prodList";
-	}
-	@GetMapping("/prodDetail.do")
-	public String prodDetailDo(HttpServletRequest request, Model model) {
-		model.addAttribute("product", orderService.getProdByNo(request));
-		return "order/prodDetail";
-	}
-	
 	@GetMapping("/cartList.do")
 	public String cartList(HttpServletRequest request, Model model) {
 		model.addAttribute("cartList", orderService.getCartList(request));

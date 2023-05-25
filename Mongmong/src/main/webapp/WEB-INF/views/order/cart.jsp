@@ -21,15 +21,13 @@
 	
 	// 개별 선택
 	function fnCheckOne() {
-		// 개별 선택 체크박스를 처음부터 끝까지 다 본다. 1ㅁ,2ㅁ,3ㅁ 를 누구든 클릭하면 이 펑션에 걸린다. 그러면 처음부터 끝까지 다 본다. 체크됐는지 안됐는지 전부 확인! 누구든 상관없다.
-		// chkCnt에 누적을 시켜서 확인해본다
-		let chkOne = $('.checkOne');  // 모든 개별선택.  많이 쓰여서 변수처리 해줌
+		let chkOne = $('.checkOne');  
 		$('.checkOne').on('click', function(){
 			let chkCnt = 0;
-			for(let i = 0; i < chkOne.length; i++){      // 배열이름이 $('.chk_one')이다.
-				chkCnt += $(chkOne[i]).prop('checked');  // 값은 false 또는 true(false=0, true=1)
+			for(let i = 0; i < chkOne.length; i++){      
+				chkCnt += $(chkOne[i]).prop('checked');  
 			}
-			$('#checkAll').prop('checked', chkCnt == chkOne.length);  // 값이 같으면 모두 선택(true) 아니면 false겠지 
+			$('#checkAll').prop('checked', chkCnt == chkOne.length);  
 		})
 	}
 	
@@ -80,7 +78,7 @@
 	function fnGoShopping() {
 		$('#btnGoShopping').on('click', function(event){
 			if(confirm('상품목록 페이지로 이동하시겠습니까?')){
-				location.href = '${contextPath}/order/prodList.form';
+				location.href = '${contextPath}/product/pagination.do';
 			} else {
 				event.preventDefault();
 				return;
@@ -123,13 +121,6 @@
 	    $('#totalPoint').text(totalPoint.toLocaleString());
 		$('#totalPay').text(totalPay.toLocaleString());
 	}
-	
-	/* function fnGoProductOrder() {
-		$('#productOrder').on('click', function(){
-			location.href = '${contextPath}/order/order.form';
-		})
-	} */
-	
 	
 	// 함수 호출
 	$(function(){
@@ -195,10 +186,10 @@
 								</td>
 								<td>
 									<div>
-										<img src="#" width="50px" height="50px">
+										<img src="${contextPath}/resources/images/mong.png" width="50px" height="50px">
 									</div>
 									<span>
-										<a href="${contextPath}/order/prodDetail.do?prodNo=${cartItem.prodNo}">${cartItem.prodName}</a>
+										<a href="${contextPath}/product/detail.do?prodNo=${cartItem.prodNo}">${cartItem.prodName}</a>
 									</span>
 								</td>
 								<td>
