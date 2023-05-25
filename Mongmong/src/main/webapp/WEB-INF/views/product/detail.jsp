@@ -9,8 +9,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${contextPath}/resources/jquery-ui-1.13.2/jquery-ui.css" />
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
+<script src="${contextPath}/resources/jquery-ui-1.13.2/jquery-ui.js"></script>
 <script>
+	$(document).ready(function(){
+	   $('#spinner').spinner({
+		  min:0,
+	      max:10,
+	      step:1,
+	      spin: function(event, ui){
+	         $('.sum').html(${((product.prodPrice * (100 - product.productSellerDTO.discountRate)) * 0.01)} * ui.value);
+	      }
+	   });
+	});
 	function fnCart() {
 		location.href='${contextPath}/order/addCart.do'
 	}
@@ -24,10 +36,31 @@
 		$('#recordPerPage').val(recordPerPage);
 		// 제목을 클릭하면 정렬을 바꿈
 		$('.sort').on('click', function(){
-			location.href='${contextPath}/product/review.do?prodNo=' + $(this).data('prod_no') + '&column=' + $(this).data('column') + '&order=' + $(this).data('order') + '&page=${page}';
+			location.href='${contextPath}/product/detail.do?prodNo=' + $(this).data('prod_no') + '&page=${page}';
 		})
 	})
 </script>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	a, a:active, a:horver {
+		text-decoration: none;
+	}
+	button {
+		border: 0;
+		cursor: pointer;
+	}
+	ul, li {
+		list-style: none;
+	}
+	body {
+		width: 100%;
+		height: 100%;
+		backgroun-color: #fff;
+	}
+</style>
 </head>
 <body>
 	<div id="wrap">	
@@ -71,14 +104,10 @@
 								<hr>											
 								<div>
 									수량(최대 구매 가능한 상품개수는 10개입니다.)
-									<span class="CountCheck">
-										<select name="amount">
-                    						<c:forEach begin="1" end="10" var="i">
-                    							<option value="${i}">${i}</option>
-                    						</c:forEach>
-               							</select>
-               							&nbsp;개
-									</span>
+								    <p>
+					                    <label for="spinner">주문수량</label>
+					                    <span><input type="text" id="spinner" name="count" value="0"/></span><span class="sum">합계</span>
+					                </p>
 								</div>
 							</form>					
 						</div>	
@@ -155,6 +184,7 @@
 											<div class="pickContent">
 												<div class="pickReview">
 													<div class="pickReviewInfo">
+														<c:set var="bestReviewExists" value="false"/>
 														<c:forEach items="${reviews}" var="review">
 															<c:if test="${review.bestReview == 1}">
 																<div class="pickReviewTitle">
@@ -163,10 +193,11 @@
 																	<span class="reviewWriter">${review.reviewWriter}</span>
 																	<span class="reviewRegDate">${review.reviewRegDate}</span>
 																</div>
-																<div class="reviewContentInfo">${review.reviewContent}</div>															
+																<div class="reviewContentInfo">${review.reviewContent}</div>
+																<c:set var="bestReviewExists" value="true"/>														
 															</c:if>
-															<c:if test="${reviews.bestReview == 0}">
-																<h2>판매자가 선정한 베스트 리뷰가 없습니다.</h2>
+															<c:if test="${not bestReviewExists}">
+																<h2>판매자가 선정한 베스트 리뷰가 없습니다.</h2>													
 															</c:if>
 														</c:forEach>
 													</div>

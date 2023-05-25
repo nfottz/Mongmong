@@ -114,7 +114,7 @@ public class ProductServiceImpl implements ProductService {
 		List<ReviewDTO> reviews = productMapper.getReviewListUsingPagination(map);
 		
 		model.addAttribute("reviews", reviews);
-		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/product/review.do?prodNo=" + prodNo + "&column" + column + "&order=" + order));
+		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/product/detail.do?prodNo=" + prodNo));
 		//model.addAttribute("beginNo",   totalRecord - (page - 1) * recordPerPage);
 		switch(order) {
 		case "ASC" : model.addAttribute("order", "DESC"); break;
