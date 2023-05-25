@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.mongmong.mapper.ProductMapper">
+
+ 	<resultMap type="ProductDTO" id="ProdMap">
+		<id column="PROD_NO" property="prodNo"/>
+		<result column="PROD_NAME" property="prodName"/>
+		<result column="PROD_PRICE" property="prodPrice"/>
+		<result column="PROD_STOCK" property="prodStock"/>
+		<result column="PROD_CONTENT" property="prodContent"/>
+		<result column="PROD_REG_DATE" property="prodRegDate"/>
+		<result column="PROD_MOD_DATE" property="prodModDate"/>
+		<result column="PROD_DELETED" property="prodDeleted"/>
+		<association javaType="ProductCategoryDTO" property="productCategoryDTO">
+			<id column="CATEGORY_NO" property="categoryNo"/>
+			<result column="CATEGORY_NAME" property="categoryName"/>
+		</association>
+	    <association javaType="ProductSellerDTO" property="productSellerDTO">
+	    	<result column="PROD_NO" property="prodNo" />
+	    	<result column="USER_NO" property="userNo"/>
+	    	<result column="DELIVERY_PRICE" property="deliveryPrice"/>
+	    	<result column="DISCOUNT_RATE" property="discountRate"/>
+	    </association>
+  	</resultMap>
+  	
+  	<resultMap type="ReviewDTO" id="ReviewMap">
+  		<id column="REVIEW_NO" property="reviewNo"/>
+  		<result column="BEST_REVIEW" property="bestReview"/>
+  		<result column="PROD_SCORE" property="prodScore"/>
+  		<result column="SELLER_SCORE" property="sellerScore"/>
+  		<result column="HAS_IMG" property="hasImg"/>
+  		<result column="REVIEW_WRITER" property="reviewWriter"/>
+  		<result column="REVIEW_CONTENT" property="reviewContent"/>
+  		<result column="REVIEW_REG_DATE" property="reviewRegDate"/>
+  		<result column="REVIEW_EXPIRED_AT" property="reviewExpiredAt"/>
+  		<result column="REVIEW_COMMENT_DEPTH" property="reviewCommentDepth"/>
+  		<result column="REVIEW_COMMENT_GROUP_NO" property="reviewCommentGroupNo"/>
+  		<association javaType="OrderDetailDTO" property="orderDetailDTO">
+  			<id column="ORDER_DETAIL_NO" property="orderDetailNo"/>
+  			<result column="COUPON_NO" property="couponNo"/>
+  			<result column="PROD_AMOUNT" property="prodAmount"/>
+  		</association>
+  		<association javaType="ProductDTO" property="productDTO">
+  			<id column="PROD_NO" property="prodNo"/>
+			<result column="PROD_NAME" property="prodName"/>
+			<result column="PROD_PRICE" property="prodPrice"/>
+			<result column="PROD_STOCK" property="prodStock"/>
+			<result column="PROD_CONTENT" property="prodContent"/>
+			<result column="PROD_REG_DATE" property="prodRegDate"/>
+			<result column="PROD_MOD_DATE" property="prodModDate"/>
+			<result column="PROD_DELETED" property="prodDeleted"/>
+  		</association>
+  	</resultMap>
+  	<!-- 
+  	<resultMap type="ProductQnaDTO" id="QnaMap">
+  		<id column="QNA_NO" property="qnaNo"/>
+  		<result column="USER_NO" property="userNo"/>
+  		<result column="QNA_CATEGORY" property="qnaCategory"/>
+  		<result column="QNA_WRITER" property="qnaWriter"/>
+  		<result column="QNA_REG_DATE" property="qnaRegDate"/>
+  		<result column="QNA_TITLE" property="qnaTitle"/>
+  		<result column="QNA_CONTENT" property="qnaContent"/>
+  		<result column="HAS_QNA_FILE" property="hasQnaFile"/>
+  		<result column="IS_SECRET" property="isSecret"/>
+  		<result column="SECRET_PW" property="secretPw"/>
+  		<result column="IS_ANSWER" property="isAnswer"/>
+  		<association javaType="ProductDTO" property="productDTO">
+  			<id column="PROD_NO" property="prodNo"/>
+			<result column="PROD_NAME" property="prodName"/>
+			<result column="PROD_PRICE" property="prodPrice"/>
+			<result column="PROD_STOCK" property="prodStock"/>
+			<result column="PROD_CONTENT" property="prodContent"/>
+			<result column="PROD_REG_DATE" property="prodRegDate"/>
+			<result column="PROD_MOD_DATE" property="prodModDate"/>
+			<result column="PROD_DELETED" property="prodDeleted"/>
+  		</association>  	
+  	</resultMap>
+  	 -->
+  	
+	<select id="getProductCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM PRODUCT_TBL
+	</select>	
+	
+  	<select id="getProductListUsingPagination" parameterType="Map" resultMap="ProdMap">
+		SELECT A.RN, A.PROD_NO, A.CATEGORY_NO, A.PROD_NAME, A.PROD_PRICE, A.PROD_STOCK, A.PROD_CONTENT, A.PROD_REG_DATE, A.PROD_MOD_DATE, A.PROD_DELETED, A.CATEGORY_NAME, A.USER_NO, A.DELIVERY_PRICE, A.DISCOUNT_RATE
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY ${column} ${order}) AS RN, P.PROD_NO, C.CATEGORY_NO, P.PROD_NAME, P.PROD_PRICE, P.PROD_STOCK, P.PROD_CONTENT, P.PROD_REG_DATE, P.PROD_MOD_DATE, P.PROD_DELETED, C.CATEGORY_NAME, S.USER_NO, S.DELIVERY_PRICE, S.DISCOUNT_RATE
+		  		  FROM PRODUCT_CATEGORY_TBL C 
+		  		 RIGHT JOIN PRODUCT_TBL P ON C.CATEGORY_NO = P.CATEGORY_NO 
+		  		  LEFT JOIN PRODUCT_SELLER_TBL S ON P.PROD_NO = S.PROD_NO 
+		  		 WHERE C.CATEGORY_NO = #{categoryNo}) A
+		 WHERE A.RN BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="getProductDetailByProdNo" parameterType="int" resultMap="ProdMap">
+		SELECT P.PROD_NO, C.CATEGORY_NO, P.PROD_NAME, P.PROD_PRICE, P.PROD_STOCK, P.PROD_CONTENT, P.PROD_REG_DATE, P.PROD_MOD_DATE, P.PROD_DELETED, C.CATEGORY_NAME, S.USER_NO, S.DELIVERY_PRICE, S.DISCOUNT_RATE
+		  FROM PRODUCT_CATEGORY_TBL C 
+		 RIGHT JOIN PRODUCT_TBL P ON C.CATEGORY_NO = P.CATEGORY_NO 
+		  LEFT JOIN PRODUCT_SELLER_TBL S ON P.PROD_NO = S.PROD_NO 
+		 WHERE P.PROD_NO = #{prodNo}
+	</select>	
+	
+	<select id="getReviewCount" parameterType="int" resultType="int">
+		SELECT COUNT(P.PROD_NO)
+		  FROM REVIEW_TBL R 
+		 INNER JOIN ORDER_DETAIL_TBL D ON R.ORDER_DETAIL_NO = D.ORDER_DETAIL_NO
+		 INNER JOIN PRODUCT_TBL P ON D.PROD_NO = P.PROD_NO
+		 WHERE P.PROD_NO = #{prodNo}
+	</select>
+	
+	<select id="getReviewListUsingPagination" parameterType="Map" resultMap="ReviewMap">
+		SELECT A.RN, A.REVIEW_NO, A.BEST_REVIEW, A.PROD_SCORE, A.SELLER_SCORE, A.HAS_IMG, A.REVIEW_WRITER, A.REVIEW_CONTENT, A.REVIEW_REG_DATE, A.REVIEW_EXPIRED_AT, A.REVIEW_COMMENT_DEPTH, A.REVIEW_COMMENT_GROUP_NO, A.ORDER_DETAIL_NO, A.ORDER_NO, A.COUPON_NO, A.PROD_AMOUNT, A.PROD_NO, A.PROD_NAME, A.PROD_PRICE
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY REVIEW_NO DESC) AS RN, R.REVIEW_NO, R.BEST_REVIEW, R.PROD_SCORE, R.SELLER_SCORE, R.HAS_IMG, R.REVIEW_WRITER, R.REVIEW_CONTENT, R.REVIEW_REG_DATE, R.REVIEW_EXPIRED_AT, R.REVIEW_COMMENT_DEPTH, R.REVIEW_COMMENT_GROUP_NO, D.ORDER_DETAIL_NO, D.ORDER_NO, D.COUPON_NO, D.PROD_AMOUNT, P.PROD_NO, P.PROD_NAME, P.PROD_PRICE
+		  		  FROM REVIEW_TBL R 
+		 	     INNER JOIN ORDER_DETAIL_TBL D ON R.ORDER_DETAIL_NO = D.ORDER_DETAIL_NO
+		 	     INNER JOIN PRODUCT_TBL P ON D.PROD_NO = P.PROD_NO
+		 	     WHERE P.PROD_NO = #{prodNo}) A
+		 WHERE A.RN BETWEEN #{begin} AND #{end}
+	</select>
+	<!--  
+	<select id="getQnaCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM PRODUCT_TBL P INNER JOIN PRODUCT_QNA_TBL Q
+		    ON P.PROD_NO = Q.PROD_NO
+		 WHERE P.PROD_NO = #{prodNo} 
+	</select>
+	
+	<select id="getQnaListUsingPagination" parameterType="Map" resultMap="QnaMap">
+		SELECT A.RN, A.QNA_NO, A.USER_NO, A.QNA_CATEGORY, A.QNA_WRITER, A.QNA_WRITER, A.QNA_REG_DATE, A.QNA_TITLE, A.QNA_CONTENT, A.HAS_QNA_FILE, A.IS_SECRET, A.SECRET_PW, A.IS_ANSWER, A.PROD_NO, A.PROD_NAME, A.PROD_PRICE
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY QNA_NO DESC) AS RN, Q.QNA_NO, Q.USER_NO, Q.QNA_CATEGORY, Q.QNA_WRITER, Q.QNA_REG_DATE, Q.QNA_TITLE, Q.QNA_CONTENT, Q.HAS_QNA_FILE, Q.IS_SECRET, Q.SECRET_PW, Q.IS_ANSWER, P.PROD_NO, P.PROD_NAME, P.PROD_PRICE
+		  		  FROM PRODUCT_TBL P INNER JOIN PRODUCT_QNA_TBL Q
+		   		    ON P.PROD_NO = Q.PROD_NO
+		 	     WHERE P.PROD_NO = #{prodNo}) A 		  
+		 WHERE A.RN BETWEEN #{begin} AND #{end} 
+	</select>
+	-->
+</mapper>
