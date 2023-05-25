@@ -2,13 +2,11 @@
 
 <configuration scan="true" scanPeriod="30 seconds">
 
-	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>
-				[%date{HH:mm:ss.SSS, Asia/Seoul}][%-5level][%logger] - %msg%n
-			</pattern>
-		</encoder>
-	</appender>
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="com.gdu.mongmong.logback.MyLogbackLayout" />
+    </encoder>
+  </appender>
 	
 	<logger name="com.gdu"             level="DEBUG" />
 

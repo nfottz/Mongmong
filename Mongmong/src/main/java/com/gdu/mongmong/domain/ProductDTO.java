@@ -10,13 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor 
 public class ProductDTO {
-	private int prodNo;
-	private int categoryNo;
-	private String prodName;
-	private int prodPrice;
-	private int prodStock;
-	private Date prodRegDate;
-	private Date prodModDate;
-	private String prodImg;
-	private int prodDeleted;
+  private int prodNo;
+  //private int categoryNo;
+  private String prodName;
+  private int prodPrice;
+  private int prodStock;
+  private String prodContent;
+  private Date prodRegDate;
+  private Date prodModDate;
+  private int prodDeleted;
+  private ProductCategoryDTO productCategoryDTO;
+  private ProductSellerDTO productSellerDTO;
 }

@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+#main {
+	display: flex;
+}
+
+body {
+	margin: 0 auto;
+	text-align: center;
+}
+#topbar {
+	display: flex;
+	border-top: 1px solid #393e46;
+	border-bottom: 2px solid #393e46;
+}
+
+ul {
+	display: flex;
+	width: 600px;
+	height: 40px;
+}
+li {
+	width: 125px;
+	height: 40px;
+}
+li > a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	line-height: 40px;
+}
+
+#leftTopbar {
+	border-right: 2px solid #393246;
+}

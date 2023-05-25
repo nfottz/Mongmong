@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SellerFilesDTO {
-  private int UserNo;
-  private String SellerFilePath;
-  private String SellerFileOriginName;
-  private String SellerFileSystemName;  
+  private int userNo;
+  private String sellerFilePath;
+  private String sellerFileSystemName;  
 
 }

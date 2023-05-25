@@ -11,10 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReviewDTO {
 	private int reviewNo;
-	private int orderDetailNo;
+	// private int orderDetailNo;
+	private OrderDetailDTO orderDetailDTO;
 	private int bestReview;
-	private int prodScore;
-	private int sellerScore;
+	private double prodScore;
+	private double sellerScore;
 	private int hasImg;
 	private String reviewWriter;
 	private String reviewContent;

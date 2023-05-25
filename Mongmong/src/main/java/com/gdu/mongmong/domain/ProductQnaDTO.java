@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductQnaDTO {
 	private int qnaNo;
-	private int prodNo;
+	private ProductDTO productDTO;
 	private int userNo;
 	private int qnaCategory;
 	private String qnaWriter;
-	private String qnaInfo;
+//	private String qnaInfo;
 	private Date qnaRegDate;
 	private String qnaTitle;
 	private String qnaContent;

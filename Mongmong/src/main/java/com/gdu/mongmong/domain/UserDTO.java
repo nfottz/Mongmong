@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTO {
 
-	private int UserNo;
-	private int UserType;
-	private String UserId;
-	private String UserPw;
-	private String UserName;
-	private String Contact;
-	private String Email;
-	private String Gender;
-	private String Birthyear;
-	private String BirthDate;
+	private int userNo;
+	private int userType;
+	private String userId;
+	private String userPw;
+	private String userName;
+	private String contact;
+	private String email;
+	private String gender;
+	private String birthyear;
+	private String birthDate;
 	private int agreecode;
 	private Date joinedAt;
 	private Date pwModifiedAt;
@@ -28,9 +28,9 @@ public class UserDTO {
 	private Date autologinExpiredAt;
 	private int onBlacklist;
 	private String sellerName;
-	private String sellerNo;
-	private int sellerCertif;
-	private Date sellerOpenDate;
+	private String sellerCertif;
+	private String sellerOpenDate;
+	
 	private int userPoint;
 	
 }

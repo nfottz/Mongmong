@@ -15,4 +15,6 @@ public class LeaveUserDTO {
     private String email;
     private Date joinedAt;
     private Date leavedAt;
+    private int reason;
+    private String message;
 }

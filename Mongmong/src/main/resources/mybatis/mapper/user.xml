@@ -4,8 +4,186 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace는 @Mapper를 지정한다. -->
-<mapper namespace="com.gdu.mongmong.UserMapper">
+<mapper namespace="com.gdu.mongmong.mapper.UserMapper">
 
-	
+	<select id="selectUserByUserDTO" parameterType="UserDTO" resultType="UserDTO">
+    SELECT USER_ID, USER_TYPE
+      FROM USER_TBL
+     WHERE USER_ID = #{userId}
+       AND USER_PW = #{userPw}
+  </select>
+  
+  <select id="selectUserById" parameterType="String" resultType="UserDTO">
+    SELECT USER_NO, USER_TYPE, USER_ID, USER_PW, USER_NAME, CONTACT, EMAIL, GENDER, BIRTHYEAR, BIRTHDATE, AGREECODE, JOINED_AT, PW_MODIFIED_AT, AUTOLOGIN_ID, AUTOLOGIN_EXPIRED_AT, ON_BLACKLIST, SELLER_NAME, SELLER_CERTIF, SELLER_OPEN_DATE
+      FROM USER_TBL
+     WHERE USER_ID = #{id}
+  </select>
+  
+  <select id="selectRestUserById" parameterType="String" resultType="RestUserDTO">
+    SELECT USER_ID
+      FROM REST_USER_TBL
+     WHERE USER_ID = #{id}
+  </select>
+  
+  <select id="selectLeaveUserById" parameterType="String" resultType="LeaveUserDTO">
+    SELECT USER_ID
+      FROM LEAVE_USER_TBL
+     WHERE USER_ID = #{id}
+  </select>
+  
+  <select id="selectUserByEmail" parameterType="String" resultType="UserDTO">
+    SELECT EMAIL
+      FROM USER_TBL
+     WHERE EMAIL = #{email}
+  </select>
+  
+  <select id="selectRestUserByEmail" parameterType="String" resultType="RestUserDTO">
+    SELECT EMAIL
+      FROM REST_USER_TBL
+     WHERE EMAIL = #{email}
+  </select>
+  
+  <select id="selectLeaveUserByEmail" parameterType="String" resultType="LeaveUserDTO">
+    SELECT EMAIL
+      FROM LEAVE_USER_TBL
+     WHERE EMAIL = #{email}
+  </select>
+  
+  <insert id="insertUser" parameterType="UserDTO">
+    <selectKey order="BEFORE" resultType="int" keyProperty="userNo">
+      SELECT USER_SEQ.NEXTVAL
+        FROM DUAL
+    </selectKey>
+    INSERT INTO USER_TBL
+    VALUES (#{userNo}
+          , #{userType}
+          , #{userId}
+          , #{userPw}
+          , #{userName}
+          , #{contact}
+          , #{email}
+          , #{gender}
+          , #{birthyear}
+          , #{birthDate}
+          , #{agreecode}
+          , SYSDATE
+          , SYSDATE
+          , NULL
+          , NULL
+          , NULL
+          , #{sellerName}
+          , #{sellerCertif}
+          , #{sellerOpenDate}
+          )
+  </insert>
+  
+  <insert id="insertAddress" parameterType="AddressDTO">
+    INSERT INTO ADDRESS_TBL
+    VALUES (ADDR_SEQ.NEXTVAL
+          , #{userNo}
+          , #{addrDefault}
+          , #{addrName}
+          , #{addrContact}
+          , NULL
+          , #{postcode}
+          , #{roadAddress}
+          , #{jibunAddress}
+          , #{detailAddress}
+          , #{extraAddress}
+          )
+  </insert>
+  
+  <insert id="insertSellerFile" parameterType="SellerFilesDTO">
+    INSERT INTO SELLER_FILES_TBL
+    VALUES (#{userNo}
+          , #{sellerFilePath}
+          , #{sellerFileSystemName}
+          )
+  </insert>
+  
+  <update id="insertAutoLogin" parameterType="UserDTO">
+    UPDATE USER_TBL
+       SET AUTOLOGIN_ID = #{autologinId}
+         , AUTOLOGIN_EXPIRED_AT = #{autologinExpiredAt}
+     WHERE USER_ID = #{userId}
+  </update>
+  
+  <update id="deleteAutoLogin" parameterType="String">
+    UPDATE USER_TBL
+       SET AUTOLOGIN_ID = NULL
+         , AUTOLOGIN_EXPIRED_AT = NULL
+     WHERE USER_ID = #{userId}
+  </update>
+  
+  <update id="updateUserAccess" parameterType="String">
+    UPDATE USER_ACCESS_TBL
+       SET LAST_LOGIN_AT = SYSDATE
+     WHERE USER_ID = #{userId}
+  </update>
+  
+  <insert id="insertUserAccess" parameterType="String">
+    INSERT INTO USER_ACCESS_TBL
+      VALUES ( #{userId}, SYSDATE)
+  </insert>
+  
+  <select id="selectAutologin" parameterType="String" resultType="UserDTO">
+    SELECT ID
+      FROM USER_TBL
+     WHERE AUTOLOGIN_ID = #{autoLoginId}
+       AND AUTOLOGIN_EXPIRED_AT > SYSDATE
+  </select>
+  
+  <insert id="insertLeaveUser" parameterType="LeaveUserDTO">
+    INSERT INTO LEAVE_USER_TBL
+    VALUES (#{userId}, #{email}, #{joinedAt}, SYSDATE, #{reason}, #{message})
+  </insert>
+  
+  <delete id="deleteUser" parameterType="String">
+    DELETE
+      FROM USER_TBL
+     WHERE USER_ID = #{userId}
+  </delete>
+  
+  <insert id="insertRestUser">
+    INSERT INTO REST_USER_TBL (
+      USER_NO, USER_TYPE, USER_ID, USER_PW, USER_NAME
+    , CONTACT, EMAIL, GENDER, BIRTHYEAR, BIRTHDATE, AGREECODE
+    , JOINED_AT, PW_MODIFIED_AT, ON_BLACKLIST, REST_AT) 
+    (SELECT U.USER_NO, U.USER_TYPE, U.USER_ID, U.USER_PW, U.USER_NAME
+          , U.CONTACT, U.EMAIL, U.GENDER, U.BIRTHYEAR, U.BIRTHDATE, U.AGREECODE
+          , U.JOINED_AT, U.PW_MODIFIED_AT, U.ON_BLACKLIST, SYSDATE
+       FROM USER_TBL U LEFT OUTER JOIN USER_ACCESS_TBL UA
+         ON U.USER_UD = UA.USER_ID
+      WHERE MONTHS_BETWEEN(SYSDATE, UA.LAST_LOGIN_AT) >= 12
+         OR (MONTHS_BETWEEN(SYSDATE, U.JOINED_AT) >= 12 AND UA.LAST_LOGIN_AT IS NULL))
+  </insert>
+  
+  <delete id="deleteUserForRest">
+    DELETE
+      FROM USER_TBL
+     WHERER ID IN(SELECT U.USER_ID
+                    FROM USER_TBL U LEFT OUTER JOIN USER_ACCESS_TVL UA
+                      ON U.USER_ID = UA.USER_ID
+                   WHERE MONTHS_BETWEEN(SYSDATE, UA.LAST_LOGIN_AT) >= 12
+                      OR (MONTHS_BETWEEN(SYSDATE, U.JOINED_AT) > 12 AND UA.LAST_LOGIN_AT IS NULL))
+  </delete>
+  
+  <insert id="insertRestoreUser" parameterType="String">
+    INSERT INTO USER_TBL(
+      USER_NO, USER_TYPE, USER_ID, USER_PW, USER_NAME
+    , CONTACT, EMAIL, GENDER, BIRTHYEAR, BIRTHDATE, AGREECODE
+    , JOINED_AT, PW_MODIFIED_AT, ON_BLACKLIST
+    ) (SELECT USER_NO, USER_TYPE, USER_ID, USER_PW, USER_NAME
+            , CONTACT, EMAIL, GENDER, BIRTHYEAR, BIRTHDATE, AGREECODE
+            , JOINED_AT, PW_MODIFIED_AT, ON_BLACKLIST
+         FROM REST_USER_TBL
+        WHERE USER_ID = #{id})
+  </insert>
+  
+  <delete id="deleteRestUser" parameterType="String">
+    DELETE
+      FROM REST_USER_TBL
+     WHERE USER_ID = #{id}
+  </delete>
 
 </mapper>

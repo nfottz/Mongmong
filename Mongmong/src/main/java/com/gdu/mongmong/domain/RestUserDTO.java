@@ -24,8 +24,6 @@ public class RestUserDTO {
 	private int agreecode;
 	private Date joinedAt;
 	private Date pwModifedAt;
-	private String autologinId;
-	private Date autologinExpiredAt;
 	private int onBlacklist;
 	private Date restAt;
 }
