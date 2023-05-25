@@ -36,7 +36,8 @@
         <a href="#"><img src="">관리자 페이지</a>
       </div>
     </c:if>
-    
+ 
+   
     <div id="cart1">
       <div id="cartCount">${cartCount }</div>
       <a href="${contextPath }/order/cartList.do" id="cart2"><img src="">장바구니</a>
