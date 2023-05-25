@@ -39,6 +39,7 @@
     <interceptor>
       <mapping path="/user/logout.do" />
       <mapping path="/user/leave.do" />
+      <mapping path="/user/login.do" />
       <beans:bean class="com.gdu.mongmong.interceptor.LoginCheckInterceptor" />
     </interceptor>
     

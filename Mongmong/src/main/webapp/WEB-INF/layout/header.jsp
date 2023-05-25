@@ -45,7 +45,7 @@
   
   <div id="topbar">
     <ul id="leftTopbar">
-      <li><a href="${contextPath }/">상품</a></li>
+      <li><a href="${contextPath }/product/pagination.do">상품</a></li>
       <li><a href="${contextPath }/">정기배송</a></li>
       <li><a href="${contextPath }/">판매자 모아보기</a></li>
       <li><a href="${contextPath }/">포토리뷰</a></li>
