@@ -36,7 +36,8 @@
         <a href="#"><img src="">관리자 페이지</a>
       </div>
     </c:if>
-    
+ 
+   
     <div id="cart1">
       <div id="cartCount">${cartCount }</div>
       <a href="${contextPath }/order/cartList.do" id="cart2"><img src="">장바구니</a>
@@ -45,7 +46,7 @@
   
   <div id="topbar">
     <ul id="leftTopbar">
-      <li><a href="${contextPath }/">상품</a></li>
+      <li><a href="${contextPath }/product/pagination.do">상품</a></li>
       <li><a href="${contextPath }/">정기배송</a></li>
       <li><a href="${contextPath }/">판매자 모아보기</a></li>
       <li><a href="${contextPath }/">포토리뷰</a></li>
