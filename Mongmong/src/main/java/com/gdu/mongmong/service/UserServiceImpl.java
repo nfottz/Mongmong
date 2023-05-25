@@ -57,8 +57,8 @@ public class UserServiceImpl implements UserService {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginId", id);
 			session.setAttribute("userType", loginUserDTO.getUserType());
-			System.out.println("*****************" + loginUserDTO.getUserType());
 			int updateResult = userMapper.updateUserAccess(id);
+			
 			if(updateResult == 0) {
 				userMapper.insertUserAccess(id);
 			}

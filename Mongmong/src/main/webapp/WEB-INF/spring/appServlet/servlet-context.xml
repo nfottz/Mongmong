@@ -33,13 +33,13 @@
       <mapping path="/user/login.form" />
       <mapping path="/user/agree.form" />
       <mapping path="/user/join.form" />
+      <mapping path="/user/login.do" />
       <beans:bean class="com.gdu.mongmong.interceptor.PreventLoginInterceptor" />
     </interceptor>
     
     <interceptor>
       <mapping path="/user/logout.do" />
       <mapping path="/user/leave.do" />
-      <mapping path="/user/login.do" />
       <beans:bean class="com.gdu.mongmong.interceptor.LoginCheckInterceptor" />
     </interceptor>
     
