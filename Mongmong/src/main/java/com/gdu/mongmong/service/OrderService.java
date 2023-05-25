@@ -11,8 +11,6 @@ import com.gdu.mongmong.domain.ProductDTO;
 
 public interface OrderService {
 	
-	public List<ProductDTO> getProdList();
-	public ProductDTO getProdByNo(HttpServletRequest request);
 	public List<CartDTO> getCartList(HttpServletRequest request);
 	public int addCart(HttpServletRequest request);
 	public int modifyCartAmount(HttpServletRequest request);
