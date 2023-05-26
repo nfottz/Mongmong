@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.gdu.mongmong.domain.UserDTO;
+
 public interface UserService {
 
 	public void login(HttpServletRequest request, HttpServletResponse response);
@@ -19,5 +21,6 @@ public interface UserService {
 	public void leave(HttpServletRequest request, HttpServletResponse response);
 	public void active(HttpServletRequest request, HttpServletResponse response);
 	public void restUserHandle();
+	public Map<String, Object> findId(UserDTO userDTO);
 	
 }

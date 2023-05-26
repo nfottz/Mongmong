@@ -110,7 +110,12 @@
 				</tr>
 				<tr>
 					<td>배송정보</td>
-					<td>${order.orderName}</td>
+					<td>
+						${order.orderName} <br>
+						[${order.postcode}] ${order.roadAddress} ${order.extraAddress} ${order.detailAddress} <br>
+						// ${order.contact} <br>
+						요청사항 : ${order.orderRequest}
+					</td>
 				</tr>
 				<tr>
 					<td>상품금액</td>

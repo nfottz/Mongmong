@@ -7,10 +7,17 @@
 <mapper namespace="com.gdu.mongmong.mapper.UserMapper">
 
 	<select id="selectUserByUserDTO" parameterType="UserDTO" resultType="UserDTO">
-    SELECT USER_ID, USER_TYPE
+    SELECT USER_ID, USER_TYPE, USER_NAME
       FROM USER_TBL
      WHERE USER_ID = #{userId}
        AND USER_PW = #{userPw}
+  </select>
+  
+  <select id="selectUserByNameAndEmail" parameterType="UserDTO" resultType="UserDTO">
+    SELECT USER_ID, JOINED_AT
+      FROM USER_TBL
+     WHERE USER_NAME = #{userName}
+       AND EMAIL = #{email}
   </select>
   
   <select id="selectUserById" parameterType="String" resultType="UserDTO">

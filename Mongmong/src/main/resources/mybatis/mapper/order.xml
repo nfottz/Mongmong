@@ -5,17 +5,6 @@
 
 <mapper namespace="com.gdu.mongmong.mapper.OrderMapper">
 
-	<select id="getProdList" resultType="ProductDTO">
-		SELECT PROD_NO, CATEGORY_NO, PROD_NAME, PROD_PRICE, PROD_STOCK, PROD_CONTENT, PROD_REG_DATE, PROD_MOD_DATE, PROD_DELETED
-		  FROM PRODUCT_TBL
-	     ORDER BY PROD_NO DESC
-	</select>
-	<select id="selectProductByNo" parameterType="int" resultType="ProductDTO">
-		SELECT PROD_NO, CATEGORY_NO, PROD_NAME, PROD_PRICE, PROD_STOCK, PROD_CONTENT, PROD_REG_DATE, PROD_MOD_DATE, PROD_DELETED
-		  FROM PRODUCT_TBL
-	     WHERE PROD_NO = #{prodNo}
-	</select>
-	
 	<!-- 쿼리 다시 짜기 -->
 	<select id="getCartList" parameterType="Map" resultType="CartDTO">
 		SELECT 

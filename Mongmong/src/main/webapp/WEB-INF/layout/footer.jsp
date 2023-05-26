@@ -4,20 +4,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="dt" value="<%=System.currentTimeMillis()%>" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
-<style>
-  #footerWrapper {
-  height: 100px;
-  background-color: #f8f8f8;
-  position: relative;
-  display: flex;
-  }
-</style>
+<link rel="stylesheet" href="${contextPath }/resources/css/default.css">
+<link rel="stylesheet" href="${contextPath }/resources/css/footer.css?dt=${dt}">
 <script>
   $(function(){
     
