@@ -23,4 +23,5 @@ public class ReviewDTO {
 	private Date reviewExpiredAt;
 	private int reviewCommentDepth;
 	private int reviewCommentGroupNo;
+	private ProductDTO productDTO;
 }

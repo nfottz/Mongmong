@@ -57,8 +57,11 @@ public class UserServiceImpl implements UserService {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginId", id);
 			session.setAttribute("userType", loginUserDTO.getUserType());
-			System.out.println("*****************" + loginUserDTO.getUserType());
+			session.setAttribute("userName", loginUserDTO.getUserName());
+			System.out.println(loginUserDTO.getUserType());
+			System.out.println(loginUserDTO.getUserName());
 			int updateResult = userMapper.updateUserAccess(id);
+			
 			if(updateResult == 0) {
 				userMapper.insertUserAccess(id);
 			}
@@ -362,6 +365,13 @@ public class UserServiceImpl implements UserService {
 		if(insertResult > 0) {
 			userMapper.deleteUserForRest();
 		}
+	}
+	
+	@Override
+	public Map<String, Object> findId(UserDTO userDTO) {
+		Map<String, Object> user = new HashMap<String, Object>();
+		user.put("findUser", userMapper.selectUserByNameAndEmail(userDTO));
+		return user;
 	}
 	
 }
