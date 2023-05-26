@@ -30,7 +30,10 @@
 		margin: 0;
 		padding: 0;
 	}
-	a, a:active, a:horver {
+	.prodInfoName {
+		text-decoration: none;
+	}
+	a {
 		text-decoration: none;
 	}
 	button {
@@ -39,13 +42,14 @@
 	}
 	ul, li {
 		list-style: none;
+		text-decoration: none;
 	}
 	body {
 		width: 100%;
 		height: 100%;
-		backgroun-color: #fff;
 	}
 	.subMain {
+		padding-top: 30px;
 		width: 20%;
 		float: left;
 	}
@@ -53,6 +57,22 @@
 		box-sizing: border-box;
 		width: 80%;
 		float: right;
+	}
+	.sortList {
+		display:flex;
+		gap: 15px;
+	}
+	.prodList {
+		display:flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+	.listStyle {
+		width: 20%;
+		min-width: 200px;
+	}
+	.pagination {
+		padding-left: 200px;
 	}
 </style>
 </head>
@@ -120,48 +140,48 @@
 												<c:when test="${categoryNo == 10}"><h2>기저귀/팬티</h2></c:when>
 											</c:choose>
 										</div>
-										<div class="prodSort">
-											<span class="sort" data-category_no="${categoryNo}" data-column="PROD_STOCK" data-order="DESC">추천순</span>
-											<span class="sort" data-category_no="${categoryNo}" data-column="DISCOUNT_RATE" data-order="DESC">판매인기순</span>
-											<span class="sort" data-category_no="${categoryNo}" data-column="PROD_PRICE" data-order="ASC">낮은가격순</span>
-											<span class="sort" data-category_no="${categoryNo}" data-column="PROD_PRICE" data-order="DESC">높은가격순</span>
-											<span class="sort" data-category_no="${categoryNo}" data-column="PROD_REG_DATE" data-order="DESC">등록일순</span>
-										</div>
-										<div class="recordPerPage">
-											<select id="recordPerPage">
-												<option value="12" selected="selected">12개</option>
-												<option value="24">24개</option>
-												<option value="40">40개</option>
-											</select>											
+										<div class="sortList">
+											<div class="prodSort">
+												<span class="sort" data-category_no="${categoryNo}" data-column="PROD_STOCK" data-order="DESC">추천순</span>
+												<span class="sort" data-category_no="${categoryNo}" data-column="DISCOUNT_RATE" data-order="DESC">판매인기순</span>
+												<span class="sort" data-category_no="${categoryNo}" data-column="PROD_PRICE" data-order="ASC">낮은가격순</span>
+												<span class="sort" data-category_no="${categoryNo}" data-column="PROD_PRICE" data-order="DESC">높은가격순</span>
+												<span class="sort" data-category_no="${categoryNo}" data-column="PROD_REG_DATE" data-order="DESC">등록일순</span>
+											</div>
+											<div class="recordPerPage">
+												<select id="recordPerPage">
+													<option value="12" selected="selected">12개</option>
+													<option value="24">24개</option>
+													<option value="40">40개</option>
+												</select>											
+											</div>
 										</div>
 									</div>
-									<div class="prodList">
-										<ul>
-											<c:forEach items="${products}" var="prod">																								
-												<li>
-													<div class="prodBox">
-														<input type="hidden" name="categoryName" value="${prod.productCategoryDTO.categoryName}">
-														<input type="hidden" name="categoryNo" value="${categoryNo}">
-														<div class="prodImgBox">
-															<a href="${contextPath}/product/detail.do?prodNo=${prod.prodNo}"><img src="${contextPath}/resources/images/product3-1.jpg" width="250px"></a>
+									<ul class="prodList">
+										<c:forEach items="${products}" var="prod">																								
+											<li class="listStyle">
+												<div class="prodBox">
+													<input type="hidden" name="categoryName" value="${prod.productCategoryDTO.categoryName}">
+													<input type="hidden" name="categoryNo" value="${categoryNo}">
+													<div class="prodImgBox">
+														<a href="${contextPath}/product/detail.do?prodNo=${prod.prodNo}"><img src="${contextPath}/resources/images/mong.png" width="200px"></a>
+													</div>
+													<div class="prodInfoBox">
+														<div class="prodInfoName">
+															<a href="${contextPath}/product/detail.do?prodNo=${prod.prodNo}"><strong class="prodName">${prod.prodName}</strong></a>
 														</div>
-														<div class="prodInfoBox">
-															<div class="prodInfoName">
-																<a href="${contextPath}/product/detail.do?prodNo=${prod.prodNo}"><strong class="prodName">${prod.prodName}</strong></a>
-															</div>
-															<div class="prodInfoPrice">
-																<span><fmt:formatNumber pattern="###,###,###" value="${prod.prodPrice}"/>원</span>
-																<div>
-																	<strong><span><fmt:formatNumber pattern="###,###,###" value="${((prod.prodPrice * (100 - prod.productSellerDTO.discountRate)) * 0.01)}"/>원</span></strong>
-																	<span>${prod.productSellerDTO.discountRate}%</span>																
-																</div>
+														<div class="prodInfoPrice">
+															<span><fmt:formatNumber pattern="###,###,###" value="${prod.prodPrice}"/>원</span>
+															<div>
+																<strong><span><fmt:formatNumber pattern="###,###,###" value="${((prod.prodPrice * (100 - prod.productSellerDTO.discountRate)) * 0.01)}"/>원</span></strong>
+																<span>${prod.productSellerDTO.discountRate}%</span>																
 															</div>
 														</div>
 													</div>
-												</li>
-											</c:forEach>
-										</ul>										
-									</div>
+												</div>
+											</li>
+										</c:forEach>
+									</ul>		
 								</div>
 							</div>
 							<div class="pagination">

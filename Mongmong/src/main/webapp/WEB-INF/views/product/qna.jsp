@@ -14,8 +14,8 @@
 <script src="${contextPath}/resources/summernote-0.8.18-dist/lang/summernote-ko-KR.min.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.min.css">
 <script>
-	function fnProductDetail() {
-		location.href = '${contextPath}/product/detail.do?prodNo=1';
+	function fnReturn() {
+		history.back();
 	}
 	$(function(){
 		$('#qnaContent').summernote({
@@ -42,7 +42,7 @@
 			header부분 가져오기
 		</div>
 		<div id="containerQna">
-			<form method="post" enctype="multipart/form-data">
+			<form method="post" enctype="multipart/form-data" action="${contextPath}/product/qnaAdd.do?prodNo=${product.prodNo}">
 				<div class="qnaTitle">
 					<h4>상품 문의</h4>
 				</div>
@@ -59,18 +59,18 @@
 									<div>
 										<select class="qnaSelect" id="qnaSelect" name="qnaSelect">
 											<option value="문의내용">문의내용</opntion>
-											<option value="상품">상품</option>
-											<option value="배송">배송</option>
-											<option value="반품/환불">반품/환불</option>
-											<option value="교환/변경">교환/변경</option>
-											<option value="기타">기타</option>
+											<option value="1" id="qna1">상품</option>
+											<option value="2" id="qna2">배송</option>
+											<option value="3" id="qna3">반품/환불</option>
+											<option value="4" id="qna4">교환/변경</option>
+											<option value="5" id="qna5">기타</option>
 										</select>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">작성자</th>
-								<td>${review.reviewWriter}</td>
+								<td><strong>${sessionScope.loginId}</strong></td>
 							</tr>
 							<tr>
 								<th scope="row">비밀번호</th>
@@ -79,8 +79,8 @@
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">상품</th>
-								<td>${prod.prodNo}</td>
+								<th scope="row">상품번호</th>
+								<td>${product.prodNo}</td>
 							</tr>
 							<tr>
 								<th scope="row">제목</th>
@@ -91,8 +91,8 @@
 							<tr>
 								<th scope="row">본문</th>
 								<td>
-									<div>
-										<input type="checkbox" name="qnaSecret" id="qnaSecret" class="qnaSecret" checked="checked">비밀글
+									<div class="qnaIsSecret">
+										<input type="checkbox" name="isSecret" id="isSecret" class="isSecret" checked="checked">비밀글
 									</div>
 									<textarea id="qnaContent" name="qnaContent" class="qnaContent"></textarea>
 								</td>
@@ -108,8 +108,8 @@
 					</table>
 				</div>
 				<div class="qnaSubmit">
-					<input type="button" value="이전" onclick="fnProductDetail()">
-					<button class="btnQnaSubmit">제출</button>
+					<input type="button" value="이전" onclick="fnReturn()">
+					<button>제출</button>
 				</div>
 			</form>
 		</div>

@@ -72,9 +72,6 @@ public class OrderServiceImpl implements OrderService {
 	    String sessionloginId = (String) session.getAttribute("loginId");
 	    int userNo = userMapper.selectUserById(sessionloginId).getUserNo();
 		int amount = Integer.parseInt(request.getParameter("amount"));
-		if(sessionloginId == null) {
-			sessionloginId = session.getId();
-		}
 		
 		CartDTO cartDTO = new CartDTO();
 		cartDTO.setProdNo(prodNo);

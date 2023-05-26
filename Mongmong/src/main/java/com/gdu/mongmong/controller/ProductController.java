@@ -1,12 +1,14 @@
 package com.gdu.mongmong.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,8 +38,8 @@ public class ProductController {
 	@GetMapping("/detail.do")
 	public String detail(HttpServletRequest request, Model model) {
 		model.addAttribute("product", productService.getProductDetailByProdNo(request));
-		model.addAttribute("reviews", productService.getReviewListUsingPagination(request, model));
-		/*model.addAttribute("qnaList", productService.getQnaListUsingPagination(request, model)); */
+		productService.getReviewListUsingPagination(request, model);
+		productService.getQnaListUsingPagination(request, model);
 		return "product/detail";
 	}
 	
@@ -46,9 +48,19 @@ public class ProductController {
 		return "product/review";
 	}
 	
+	@PostMapping("reviewAdd.do")
+	public void reviewAdd(HttpServletRequest request, HttpServletResponse response) {
+		productService.insertReview(request, response);
+	}
+	
 	@GetMapping("/qna.do")
 	public String qna() {
 		return "product/qna";
+	}
+	
+	@PostMapping("/qnaAdd.do")
+	public void qnaAdd(HttpServletRequest request, HttpServletResponse response) {
+		productService.insertQna(request, response);
 	}
 	
 }

@@ -11,15 +11,19 @@ import com.gdu.mongmong.domain.ReviewDTO;
 
 @Mapper
 public interface ProductMapper {
-	public int getProductCount();
+	public int getProductCateCount();
+	public int getCateProductCount(int categoryNo);
 	public List<ProductDTO> getProductListUsingPagination(Map<String, Object> map);
 	
 	public ProductDTO getProductDetailByProdNo(int prodNo);
 	
 	public int getReviewCount(int prodNo);
 	public List<ReviewDTO> getReviewListUsingPagination(Map<String, Object> map);	
-	/*
-	public int getQnaCount();
+
+	public int getQnaCount(int prodNo);
 	public List<ProductQnaDTO> getQnaListUsingPagination(Map<String, Object> map);	
-	*/
+	
+	public int insertReview(ReviewDTO reviewDTO);
+	
+	public int insertQna(ProductQnaDTO productQnaDTO);
 }
