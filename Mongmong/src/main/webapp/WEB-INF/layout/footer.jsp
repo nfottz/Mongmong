@@ -20,15 +20,15 @@
 </style>
 <script>
   $(function(){
-	  
-	  $('#btnCs').on('click', function(){
-		  location.href="${contextPath}/1:1문의 매핑";
-	  })
-	  
-	  $('#btnNotice').on('click', function(){
-		  location.href="${contextPath}/공지사항 매핑";
-	  })
-	  
+    
+    $('#btnCs').on('click', function(){
+      location.href="${contextPath}/1:1문의 매핑";
+    })
+    
+    $('#btnNotice').on('click', function(){
+      location.href="${contextPath}/공지사항 매핑";
+    })
+    
   })
 </script>
 </head>
