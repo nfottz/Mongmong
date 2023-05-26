@@ -23,7 +23,7 @@ public interface ProductMapper {
 	public int getQnaCount(int prodNo);
 	public List<ProductQnaDTO> getQnaListUsingPagination(Map<String, Object> map);	
 	
-	public int insertReview(ReviewDTO reviewDTO);
+	/* public int insertReview(ReviewDTO reviewDTO); */
 	
-	public int insertQna(ProductQnaDTO productQnaDTO);
+	public int insertQna(Map<String, Object> map);
 }

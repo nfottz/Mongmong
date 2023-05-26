@@ -230,7 +230,6 @@
 										<tr>
 											<td>문의번호</td>
 											<td>상품명/제목</td>
-											<td>작성자</td>
 											<td>작성일자</td>
 											<td>답변상태</td>
 										</tr>
@@ -240,7 +239,6 @@
 											<tr>
 												<td>${qna.qnaNo}</td>
 												<td>${qna.productDTO.prodName}/${qna.qnaTitle}'</td>
-												<td>${qna.qnaWriter}</td>
 												<td>${qna.qnaRegDate}</td>
 												<td>
 													<c:choose>

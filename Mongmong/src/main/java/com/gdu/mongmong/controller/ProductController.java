@@ -48,10 +48,11 @@ public class ProductController {
 		return "product/review";
 	}
 	
-	@PostMapping("reviewAdd.do")
-	public void reviewAdd(HttpServletRequest request, HttpServletResponse response) {
-		productService.insertReview(request, response);
-	}
+	/*
+	 * @PostMapping("reviewAdd.do") public void reviewAdd(HttpServletRequest
+	 * request, HttpServletResponse response) { productService.insertReview(request,
+	 * response); }
+	 */
 	
 	@GetMapping("/qna.do")
 	public String qna() {

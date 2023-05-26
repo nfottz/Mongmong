@@ -12,6 +12,10 @@ public interface ProductService {
 	public ProductDTO getProductDetailByProdNo(HttpServletRequest request);
 	public void getReviewListUsingPagination(HttpServletRequest request, Model model);
 	public void getQnaListUsingPagination(HttpServletRequest request, Model model);
-	public void insertReview(HttpServletRequest request, HttpServletResponse response);
+
+	/*
+	 * public void insertReview(HttpServletRequest request, HttpServletResponse
+	 * response);
+	 */
 	public void insertQna(HttpServletRequest request, HttpServletResponse response);
 }

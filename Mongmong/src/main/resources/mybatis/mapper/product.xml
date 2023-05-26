@@ -131,13 +131,13 @@
 		 WHERE P.PROD_NO = #{prodNo} 
 	</select>
 	
-	<insert id="insertReview" parameterType="Map">
+<!-- 	<insert id="insertReview" parameterType="Map">
 		INSERT INTO REVIEW_TBL (
 			REVIEW_NO, ORDER_DETAIL_NO, BEST_REVIEW, PROD_SCORE, SELLER_SCORE, HAS_IMG, REVIEW_WRITER, REVIEW_CONTENT, REVIEW_REG_DATE, REVIEW_EXPIRED_AT, REVIEW_COMMENT_DEPTH, REVIEW_COMMENT_GROUP_NO	
 		) VALUES (
 			REVIEW_SEQ.NEXTVAL, #{orderDetailNo}, 0, #{prodScore}, #{sellerScore}, 0, #{reviewWriter}, #{reviewContent}, SYSDATE,  SYSDATE + 90, REVIEW_SEQ.CURRVAL, 0)
 		)
-	</insert>
+	</insert> -->
 	
 	<select id="getQnaListUsingPagination" parameterType="Map" resultMap="QnaMap">
 		SELECT A.RN, A.QNA_NO, A.USER_NO, A.QNA_CATEGORY, A.QNA_REG_DATE, A.QNA_TITLE, A.QNA_CONTENT, A.HAS_QNA_FILE, A.IS_ANSWER, A.PROD_NO, A.PROD_NAME, A.PROD_PRICE
@@ -150,9 +150,9 @@
 	
 	<insert id="insertQna" parameterType="Map">
 		INSERT INTO PRODUCT_QNA_TBL (
-			QNA_NO, PRODUCT_NO, USER_NO, QNA_CATEGORY, QNA_WRITER, QNA_REG_DATE, QNA_TITLE, QNA_CONTENT, HAS_QNA_FILE, IS_SECRET, SECRET_PW, IS_ANSWER
+			QNA_NO, PROD_NO, USER_NO, QNA_CATEGORY, QNA_REG_DATE, QNA_TITLE, QNA_CONTENT, HAS_QNA_FILE, IS_ANSWER
 		) VALUES (
-			QNA_SEQ.NEXTVAL, #{productDTO.prodNo}, #{userNo}, #{qnaCategory}, #{userName}, SYSDATE, #{qnaTitle}, #{qnaContent}, 0, 0, #{secretPw}, 0		
+			QNA_SEQ.NEXTVAL, #{prodNo}, #{userNo}, #{qnaCategory}, SYSDATE, #{qnaTitle}, #{qnaContent}, 0, 0		
 		)
 	</insert>
 

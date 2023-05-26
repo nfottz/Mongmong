@@ -57,7 +57,7 @@
 								<th scope="row">말머리</th>
 								<td>
 									<div>
-										<select class="qnaSelect" id="qnaSelect" name="qnaSelect">
+										<select class="qnaSelect" id="qnaCategory" name="qnaCategory">
 											<option value="문의내용">문의내용</opntion>
 											<option value="1" id="qna1">상품</option>
 											<option value="2" id="qna2">배송</option>
@@ -73,14 +73,8 @@
 								<td><strong>${sessionScope.loginId}</strong></td>
 							</tr>
 							<tr>
-								<th scope="row">비밀번호</th>
-								<td>								
-									<input type="text" id="qnaPw" name="qnaPw">
-								</td>
-							</tr>
-							<tr>
 								<th scope="row">상품번호</th>
-								<td>${product.prodNo}</td>
+								<td>${productDTO.prodNo}</td>
 							</tr>
 							<tr>
 								<th scope="row">제목</th>
@@ -91,9 +85,6 @@
 							<tr>
 								<th scope="row">본문</th>
 								<td>
-									<div class="qnaIsSecret">
-										<input type="checkbox" name="isSecret" id="isSecret" class="isSecret" checked="checked">비밀글
-									</div>
 									<textarea id="qnaContent" name="qnaContent" class="qnaContent"></textarea>
 								</td>
 							</tr>

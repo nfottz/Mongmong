@@ -145,88 +145,91 @@ public class ProductServiceImpl implements ProductService {
 		model.addAttribute("prodNo", prodNo);
 	}
 	
-	@Override
-	public void insertReview(HttpServletRequest request, HttpServletResponse response) {
-		
-		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
-		
-		String strOrderDetailNo = request.getParameter("orderDetailNo");
-		int orderDetailNo = 0;
-		if(strOrderDetailNo != null && strOrderDetailNo.isEmpty() == false) {
-			orderDetailNo = Integer.parseInt(strOrderDetailNo);
-		}
-		
-		OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
-		orderDetailDTO.setOrderDetailNo(orderDetailNo);
-		
-		String strSellerScore = request.getParameter("reviewStar1");
-		int sellerScore = 0;
-		if(strSellerScore != null && strSellerScore.isEmpty() == false) {
-			sellerScore = Integer.parseInt(strSellerScore);
-		}
-		
-		String strProdScore = request.getParameter("reviewStar2");
-		int prodScore = 0;
-		if(strProdScore != null && strProdScore.isEmpty() == false) {
-			prodScore = Integer.parseInt(strProdScore);
-		}
-		
-		String reviewWriter = request.getParameter("reviewWriter");
-		String reviewContent = request.getParameter("reviewContent");
-		
-		ReviewDTO review = new ReviewDTO();
-		review.setOrderDetailDTO(orderDetailDTO);
-		review.setSellerScore(sellerScore);
-		review.setProdScore(prodScore);
-		review.setReviewWriter(reviewWriter);
-		review.setReviewContent(reviewContent);
-		
-		int addReview = productMapper.insertReview(review);
-		
-		try {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			
-			out.println("<script>");
-			if(addReview == 1 ) {
-				out.println("alert('리뷰가 등록되었습니다.')");
-				out.println("location.href='" + request.getContextPath() + "/produt/detail.do?prodNo=" + prodNo + "'");
-			} else {
-				out.println("alert('리뷰 등록에 실패하였습니다.')");
-				out.println("history.back()");
-			}
-			
-			out.println("</script>");
-			out.flush();
-			out.close();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	/*
+	 * @Override public void insertReview(HttpServletRequest request,
+	 * HttpServletResponse response) {
+	 * 
+	 * int prodNo = Integer.parseInt(request.getParameter("prodNo"));
+	 * 
+	 * String strOrderDetailNo = request.getParameter("orderDetailNo"); int
+	 * orderDetailNo = 0; if(strOrderDetailNo != null && strOrderDetailNo.isEmpty()
+	 * == false) { orderDetailNo = Integer.parseInt(strOrderDetailNo); }
+	 * 
+	 * OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
+	 * orderDetailDTO.setOrderDetailNo(orderDetailNo);
+	 * 
+	 * String strSellerScore = request.getParameter("reviewStar1"); int sellerScore
+	 * = 0; if(strSellerScore != null && strSellerScore.isEmpty() == false) {
+	 * sellerScore = Integer.parseInt(strSellerScore); }
+	 * 
+	 * String strProdScore = request.getParameter("reviewStar2"); int prodScore = 0;
+	 * if(strProdScore != null && strProdScore.isEmpty() == false) { prodScore =
+	 * Integer.parseInt(strProdScore); }
+	 * 
+	 * String reviewWriter = request.getParameter("reviewWriter"); String
+	 * reviewContent = request.getParameter("reviewContent");
+	 * 
+	 * ReviewDTO review = new ReviewDTO(); review.setOrderDetailDTO(orderDetailDTO);
+	 * review.setSellerScore(sellerScore); review.setProdScore(prodScore);
+	 * review.setReviewWriter(reviewWriter); review.setReviewContent(reviewContent);
+	 * 
+	 * int addReview = productMapper.insertReview(review);
+	 * 
+	 * try { response.setContentType("text/html; charset=UTF-8"); PrintWriter out =
+	 * response.getWriter();
+	 * 
+	 * out.println("<script>"); if(addReview == 1 ) {
+	 * out.println("alert('리뷰가 등록되었습니다.')"); out.println("location.href='" +
+	 * request.getContextPath() + "/produt/detail.do?prodNo=" + prodNo + "'"); }
+	 * else { out.println("alert('리뷰 등록에 실패하였습니다.')");
+	 * out.println("history.back()"); }
+	 * 
+	 * out.println("</script>"); out.flush(); out.close();
+	 * 
+	 * } catch(Exception e) { e.printStackTrace(); } }
+	 */
 	
 	@Override
 	public void insertQna(HttpServletRequest request, HttpServletResponse response) {
 		
+		int qnaCategory = Integer.parseInt(request.getParameter("qnaCategory"));
 		String qnaTitle = request.getParameter("qnaTitle");
 		String qnaContent = request.getParameter("qnaContent");
-		String secretPw = request.getParameter("secretPw");
 		
-		String strSellerScore = request.getParameter("reviewStar1");
-		int sellerScore = 0;
-		if(strSellerScore != null && strSellerScore.isEmpty() == false) {
-			sellerScore = Integer.parseInt(strSellerScore);
-		}
+		ProductDTO productDTO = new ProductDTO();
+		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
+		productDTO.setProdNo(prodNo);
 		
+		HttpSession session = request.getSession();
+		Optional<Object> opt = Optional.ofNullable(session.getAttribute("loginId"));
+		int userNo = (int)(opt.orElse(0));
 		
-		ProductQnaDTO qna = new ProductQnaDTO();
-		qna.setQnaTitle(qnaTitle);
-		qna.setQnaContent(qnaContent);
-		qna.setSecretPw(secretPw);
+		ProductQnaDTO qnaDTO = new ProductQnaDTO();
+		qnaDTO.setQnaCategory(qnaCategory);
+		qnaDTO.setQnaTitle(qnaTitle);
+		qnaDTO.setQnaContent(qnaContent);
+		qnaDTO.setProductDTO(productDTO);
+		qnaDTO.setUserNo(userNo);
 		
-		int addResult = productMapper.insertQna(qna);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("qnaDTO", qnaDTO);
+		map.put("productDTO", productDTO);
+		int addResult = productMapper.insertQna(map);
 		
 		try {
+			response.setContentType("text/html; charset=UTF-8"); 
+			PrintWriter out = response.getWriter();
+			 
+			out.println("<script>"); 
+			if(addResult == 1 ) {
+				out.println("alert('리뷰가 등록되었습니다.')"); 
+				out.println("location.href='" +	request.getContextPath() + "/product/pagination.do'"); 
+			} else { out.println("alert('리뷰 등록에 실패하였습니다.')");
+			 	out.println("history.back()"); 
+			}
+			out.println("</script>"); 
+			out.flush(); 
+			out.close();	
 			
 		} catch(Exception e) {
 			e.printStackTrace();
