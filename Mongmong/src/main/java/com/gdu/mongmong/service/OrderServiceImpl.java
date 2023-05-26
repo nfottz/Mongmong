@@ -31,20 +31,6 @@ public class OrderServiceImpl implements OrderService {
 	private OrderMapper orderMapper;
 	private UserMapper userMapper;
 	
-	@Override
-	public List<ProductDTO> getProdList() {
-		return orderMapper.getProdList();
-	}
-	
-	@Override
-	public ProductDTO getProdByNo(HttpServletRequest request) {
-		String strProdNo = request.getParameter("prodNo");
-		int prodNo = 0;
-		if(strProdNo != null && strProdNo.isEmpty() == false) { 
-			prodNo = Integer.parseInt(strProdNo);
-		} 
-		return orderMapper.selectProductByNo(prodNo);
-	}
 
 	@Override
 	public List<CartDTO> getCartList(HttpServletRequest request) {

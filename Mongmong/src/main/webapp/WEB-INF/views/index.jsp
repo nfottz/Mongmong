@@ -11,8 +11,8 @@
 <meta charset="UTF-8">
 <title>몽몽 메인페이지</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
-<%@ include file="/WEB-INF/layout/header.jsp" %>
 </head>
+<%@ include file="/WEB-INF/layout/header.jsp" %>
 <body>
     
   원래는 사진 넣으려고 했던 공간ㅋ 강쥐 사진이라도 넣든지,,
