@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
+<%@ include file="/WEB-INF/layout/header.jsp" %>
 <script>
 
 	function fnGoCart() {
@@ -153,7 +154,7 @@
 								<tr>
 									<td>
 										<div>
-											<img src="#" width="50px" height="50px">
+											<img src="${contextPath}/resources/images/mong.png" width="50px" height="50px">
 										</div>
 										<div>${cartItem.prodName}</div>
 									</td>
@@ -405,4 +406,5 @@
 		</form>
 	</div>
 </body>
+<%@ include file="/WEB-INF/layout/footer.jsp" %>
 </html>

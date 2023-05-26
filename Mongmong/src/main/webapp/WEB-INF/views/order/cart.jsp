@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
+<%@ include file="/WEB-INF/layout/header.jsp" %>
 <script>
 
 	//모두 동의
@@ -249,5 +250,5 @@
 	</form>
 
 </body>
-
+<%@ include file="/WEB-INF/layout/footer.jsp" %>
 </html>
