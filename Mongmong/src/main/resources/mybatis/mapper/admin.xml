@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.mongmong.mapper.AdminMapper">
+
+  <select id="getCategoryCount" resultType="int">
+    SELECT COUNT(*)
+      FROM PRODUCT_CATEGORY_TBL
+  </select>
+  
+  <select id="getCategoryCountByQuery" parameterType="Map" resultType="int">
+    SELECT COUNT(*)
+      FROM PRODUCT_CATEGORY_TBL
+    WHERE ${columnsearch} LIKE '%' || #{query} || '%'
+  </select>
+  
+  <select id="getCategoryListUsingPagination" parameterType="Map" resultType="ProductCategoryDTO">
+    SELECT A.RN, A.CATEGORY_NO, A.CATEGORY_NAME
+     FROM (SELECT ROW_NUMBER() OVER(ORDER BY ${columnorder} ${order}) AS RN, C.CATEGORY_NO, C.CATEGORY_NAME
+             FROM PRODUCT_CATEGORY_TBL C
+            <where>
+               <if test="columnsearch != '' and query != ''" >
+                ${columnsearch} LIKE '%' || #{query} || '%'
+               </if>
+            </where>) A 
+    WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select>
+  
+  <select id="getCategorySearchCount" parameterType="Map" resultType="int" >
+    SELECT COUNT(CATEGORY_NO)
+      FROM PRODUCT_CATEGORY_TBL
+       <where>
+         <if test="column != '' and query != ''" >
+          ${column} LIKE CONCAT('%', CONCAT(#{query}, '%'))
+         </if>
+       </where>
+  </select>
+  
+  <select id="getAutoComplete" parameterType="Map" resultType="ProductCategoryDTO">
+    SELECT DISTINCT CATEGORY_NAME
+      FROM PRODUCT_CATEGORY_TBL
+     WHERE CATEGORY_NAME LIKE CONCAT('%', CONCAT(#{query}, '%'))
+  </select>
+  
+  <insert id="addCategory" parameterType="ProductCategoryDTO">
+    INSERT INTO PRODUCT_CATEGORY_TBL 
+         VALUES (CATEGORY_SEQ.NEXTVAL, #{categoryName})
+  </insert>
+  
+  <select id="getCategory" parameterType="int" resultType="ProductCategoryDTO">
+    SELECT CATEGORY_NO, CATEGORY_NAME
+      FROM PRODUCT_CATEGORY_TBL
+     WHERE CATEGORY_NO = #{categoryNo}
+  </select>
+	
+  <update id="editCategory" parameterType="ProductCategoryDTO">
+    UPDATE PRODUCT_CATEGORY_TBL
+      SET CATEGORY_NAME = #{categoryName}
+    WHERE CATEGORY_NO = ${categoryNo}
+  </update>
+  
+  <delete id="removeCategory" parameterType="int">
+    DELETE 
+      FROM PRODUCT_CATEGORY_TBL 
+     WHERE CATEGORY_NO = #{categoryNo}
+  </delete>
+  
+</mapper>

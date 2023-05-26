@@ -10,14 +10,10 @@ import com.gdu.mongmong.domain.CartDTO;
 import com.gdu.mongmong.domain.OrderDTO;
 import com.gdu.mongmong.domain.OrderDetailDTO;
 import com.gdu.mongmong.domain.PointDetailDTO;
-import com.gdu.mongmong.domain.ProductDTO;
-import com.gdu.mongmong.domain.UserDTO;
 
 @Mapper
 public interface OrderMapper {
 	
-	public List<ProductDTO> getProdList();
-	public ProductDTO selectProductByNo(int prodNo);
 	public List<CartDTO> getCartList(Map<String, Object> cartMap);
 	public CartDTO checkCart(CartDTO cartDTO); 
 	public int addCart(CartDTO cartDTO);

@@ -44,6 +44,7 @@ $(function(){
         <a href="${contextPath }/admin/adminpageMain.form">관리자 페이지</a>
       </div>
     </c:if>
+ 
     <div id="cart1">
       <div id="cartCount">${cartCount }</div>
       <a href="${contextPath }/order/cartList.do" id="cart2"><i class="fa-solid fa-cart-shopping fa-2x" style="color: #222831;"></i>&nbsp;&nbsp;&nbsp;장바구니</a>
