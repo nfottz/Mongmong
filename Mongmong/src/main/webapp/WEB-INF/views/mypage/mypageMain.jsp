@@ -71,9 +71,11 @@
         <li><a href="${contextPath }/mypage/leave.form">회원 탈퇴</a></li>
       </ul>
     </div>
-    <div>
-      <h4><i class="fa-solid fa-paw fa-2x" style="color: #ffd369;"></i> <a href="${contextPath }/seller/sellermain.do">판매자 페이지</a></h4>
-    </div>
+    <c:if test="${sessionScope.userType == 2 }">
+      <div>
+        <h4><i class="fa-solid fa-paw fa-2x" style="color: #ffd369;"></i> <a href="${contextPath }/seller/sellermain.do">판매자 페이지</a></h4>
+      </div>
+    </c:if>
   </div>
 
 </body>
