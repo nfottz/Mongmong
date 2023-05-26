@@ -1,8 +1,11 @@
 package com.gdu.mongmong.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +23,8 @@ public class SellerController {
 	private SellerService sellerService;
 	
 	@GetMapping("/sellermain.do")
-	public String sellerMain() {
+	public String sellerMain(HttpServletRequest request, Model model) {
+		sellerService.getProdList(request, model);
 		return "seller/sellermain";
 	}
 	

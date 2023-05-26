@@ -14,6 +14,30 @@
 	function fnList(){
 		location.href = '${contextPath}/seller/sellermain.do'
 	}
+	
+	function fnFileCheck(vThis){
+
+		let maxSize = 1024 * 1024 * 10;
+		
+		// 첨부된 파일 목록
+		let files = vThis.files;
+		
+		// 첨부된 파일 순회(크기 체크 + 첨부된 파일명 표시)
+		$('#fileList').empty();
+		$.each(files, function(i, file){
+			
+			if(file.size > maxSize){
+				alert('각 첨부파일의 최대 크기는 10MB입니다.');
+				$(vThis).val('');  // 첨부된 파일을 모두 지운다.
+				$('#fileList').text('첨부 파일의 목록이 이 곳에 표시됩니다');
+				return;
+			}
+			
+			$('#fileList').append('<div>' + file.name + '</div>');
+			
+		})
+		
+	}
 </script>
 </head>
 <body>
@@ -29,7 +53,7 @@
 		</div>
 		<div>
 			<label for="prodContent">내용</label>
-			<textarea rows="15" cols="100" placeholder="내용을 입력하세요."></textarea>
+			<textarea rows="15" cols="100" name="prodContent" placeholder="내용을 입력하세요."></textarea>
 		</div>
 		<div>
 			<label for="prodPrice">가격</label>
