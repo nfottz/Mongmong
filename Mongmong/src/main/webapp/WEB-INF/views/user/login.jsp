@@ -103,10 +103,12 @@
       <a href="${contextPath }/user/findPw.form">비밀번호 찾기</a>
     </div>
     
+    <!-- 
     <div>
       네이버/카카오 로그인
     </div>
-    
+     -->
+     
     <div>
       <div>
         아직도 몽몽 회원이 아니신가요?

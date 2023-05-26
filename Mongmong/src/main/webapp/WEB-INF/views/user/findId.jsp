@@ -10,30 +10,36 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
-<script src="${contextPath}/resources/js/lib/moment-with-locales.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
   function fnFindId(){
 	  $('#btnFindId').on('click', function(){
 		  $.ajax({
 			  type: 'post',
 			  url: '${contextPath}/user/findId.do',
-			  contentType: 'apllication/json',
+			  contentType: 'application/json',
 			  data: JSON.stringify({
-				  name: $('#name').val();
-			    email: $('#email').val();
+				  userName: $('#userName').val(),
+			    email: $('#email').val()
 			  }),
 			  dataType: 'json',
 			  success: function(resData){
+				  console.log(resData);
 				  if(resData.findUser != null){
-					  let id = resData.findUser.id;
-					  
+					  let id = resData.findUser.userId;
+					  moment.locale('ko-KR');
+					  $('#findResult').html('회원님의 아이디는 ' + id + '입니다.<br>(가입일: ' + moment(resData.findUser.joinedAt).format("YYYY년 MM월 DD일 a h:mm:ss") + ')');
 				  } else {
 					  $('#findResult').text('일치하는 회원이 없습니다.');
 				  }
 			  }
-		  })
-	  })
+		  });
+	  });
   }
+  
+  $(function(){
+	  fnFindId();
+  })
 </script>
 </head>
 <body>
@@ -43,8 +49,8 @@
     <h2>아이디 찾기</h2>
 
     <div>
-      <label for="name">*이름</label>
-      <input type="text" name="name" id="name">
+      <label for="userName">*이름</label>
+      <input type="text" name="userName" id="userName">
     </div>
     <div>
       <label for="email">*이메일</label>

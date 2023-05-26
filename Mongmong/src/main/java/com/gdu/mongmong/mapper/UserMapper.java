@@ -12,6 +12,7 @@ import com.gdu.mongmong.domain.UserDTO;
 public interface UserMapper {
 
 	public UserDTO selectUserByUserDTO(UserDTO userDTO);
+	public UserDTO selectUserByNameAndEmail(UserDTO userDTO);
 	public UserDTO selectUserById(String id);
 	public RestUserDTO selectRestUserById(String id);
 	public LeaveUserDTO selectLeaveUserById(String id);

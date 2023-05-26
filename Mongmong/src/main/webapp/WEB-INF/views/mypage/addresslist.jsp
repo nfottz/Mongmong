@@ -20,6 +20,7 @@
   })
 </script>
 </head>
+<%@ include file="/WEB-INF/views/mypage/mypageMain.jsp" %>
 <body>
 
   <div>
