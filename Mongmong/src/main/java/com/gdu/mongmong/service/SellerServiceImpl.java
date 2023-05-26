@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import com.gdu.mongmong.domain.ProductCategoryDTO;
 import com.gdu.mongmong.domain.ProductDTO;
 import com.gdu.mongmong.domain.UserDTO;
 import com.gdu.mongmong.mapper.SellerMapper;
+import com.gdu.mongmong.mapper.UserMapper;
 import com.gdu.mongmong.util.MyFileUtil;
 
 import lombok.AllArgsConstructor;
@@ -26,9 +28,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SellerServiceImpl implements SellerService {
 	
-	@Autowired
 	private SellerMapper sellerMapper;
 	private MyFileUtil myFileUtil;
+	private UserMapper userMapper;
 	
 	@Transactional(readOnly = true)
 	@Override
@@ -114,7 +116,10 @@ public class SellerServiceImpl implements SellerService {
 	
 	@Override
 	public void getProdList(HttpServletRequest request, Model model) {
-		List<ProductDTO> prodList = sellerMapper.getProdList();
+		HttpSession session = request.getSession();
+		String loginId = (String)session.getAttribute("loginId");
+		int userNo = userMapper.selectUserById(loginId).getUserNo();
+		List<ProductDTO> prodList = sellerMapper.selectProdList(userNo);
 		model.addAttribute("prodList", prodList);
 	}
 	

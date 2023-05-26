@@ -20,9 +20,14 @@ import com.gdu.mongmong.service.AdminService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-  //dd
+
   @Autowired
   private AdminService adminService;
+  
+  @GetMapping("/adminpageMain.form")
+  public String adminpageMain() {
+    return "admin1/adminMain";
+  }
   
   @GetMapping("/categoryList.form")
   // 컨트롤러에서 @@RequestParam으로 파라미터에 대한 null처리하기.

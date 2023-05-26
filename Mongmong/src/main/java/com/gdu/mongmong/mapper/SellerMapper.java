@@ -15,6 +15,7 @@ public interface SellerMapper {
 		
 	public int prodAdd(ProductDTO productDTO);
 	public int modifyId(UserDTO userDTO);
-	public List<ProductDTO> getProdList();
+	public List<ProductDTO> selectProdList(int userNo);
 	public List<ProductCategoryDTO> cateList();
+
 }
